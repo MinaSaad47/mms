@@ -2,17 +2,65 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/btn_viewItens"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/btn_addItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="50dp"
+        android:text="Add Item"
+        app:layout_constraintEnd_toStartOf="@+id/btn_searchItem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+    <Button
+        android:id="@+id/btn_searchItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search Item"
+        app:layout_constraintEnd_toStartOf="@+id/btn_editItem"
+        app:layout_constraintStart_toEndOf="@+id/btn_addItem"
+        app:layout_constraintTop_toTopOf="@+id/btn_addItem" />
+
+    <Button
+        android:id="@+id/btn_editItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_searchItem"
+        app:layout_constraintTop_toTopOf="@+id/btn_searchItem" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="279dp"
+        android:layout_height="329dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btn_viewAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="View All"
+        app:layout_constraintEnd_toStartOf="@+id/btn_checkOut"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_addItem" />
+
+    <Button
+        android:id="@+id/btn_checkOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Checkout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_viewAll"
+        app:layout_constraintTop_toTopOf="@+id/btn_viewAll" />
 </androidx.constraintlayout.widget.ConstraintLayout>

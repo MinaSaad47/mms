@@ -20,8 +20,21 @@ public final class AppDatabase extends SQLiteOpenHelper {
     public static final String COL_ITEM_QUANTITY = "ITEM_QUANTITY";
     private static final String COL_ITEM_IMAGE_URL = "ITEM_IMAGE_URL";
 
+    private static volatile AppDatabase INSTANT = null;
+
     private AppDatabase(@Nullable Context context) {
         super(context, "items.db", null, 1);
+    }
+
+    public static AppDatabase getInstant(Context context) {
+        if (INSTANT == null) {
+            synchronized (AppDatabase.class) {
+                if (INSTANT == null) {
+                    INSTANT = new AppDatabase(context);
+                }
+            }
+        }
+        return INSTANT;
     }
 
 
