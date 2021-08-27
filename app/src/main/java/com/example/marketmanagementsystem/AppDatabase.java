@@ -71,14 +71,24 @@ public final class AppDatabase extends SQLiteOpenHelper {
         return insert == -1;
     }
 
-    public List<Item> getItemsList() {
+    public List<Item> getItemsList(String itemName) {
         List<Item> returnList = new ArrayList<>();
 
-        String queryString = "SELECT * FROM " + ITEM_TABLE;
-
+        String queryString = "";
         SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor;
 
-        Cursor cursor = db.rawQuery(queryString, null);
+        if (itemName == null) {
+            queryString = "SELECT * FROM " + ITEM_TABLE;
+            cursor = db.rawQuery(queryString, null);
+        }
+        else {
+            queryString = "SELECT * FROM " + ITEM_TABLE + " WHERE " +
+                    COL_ITEM_NAME + " = ?";
+            cursor = db.rawQuery(queryString, new String[] {itemName});
+        }
+
+
 
         if (cursor.moveToFirst()) {
             do {

@@ -1,6 +1,7 @@
 package com.example.marketmanagementsystem;
 
 import android.content.Context;
+import android.content.Intent;
 import android.gesture.GestureLibraries;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.GenericLifecycleObserver;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -43,6 +45,14 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
         holder.tv_itemPrice.setText(String.valueOf(itemList.get(position).getPrice()));
         holder.tv_itemQuantity.setText(String.valueOf(itemList.get(position).getQuantity()));
         Glide.with(this.context).load(itemList.get(position).getImageURL()).into(holder.iv_itemImage);
+        holder.layout_oneLineItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AddEditItemActivity.class);
+                intent.putExtra("id", itemList.get(position).getId());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -55,6 +65,7 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
     public class AppViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_itemImage;
         TextView tv_itemId, tv_itemName, tv_itemPrice, tv_itemQuantity;
+        ConstraintLayout layout_oneLineItem;
 
         public AppViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +75,7 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
             tv_itemName = itemView.findViewById(R.id.tv_itemName);
             tv_itemPrice = itemView.findViewById(R.id.tv_itemPrice);
             tv_itemQuantity = itemView.findViewById(R.id.tv_itemQuantity);
+            layout_oneLineItem = itemView.findViewById(R.id.layout_oneLineItem);
         }
     }
 }

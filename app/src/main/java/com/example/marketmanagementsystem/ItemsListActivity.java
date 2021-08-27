@@ -35,7 +35,7 @@ public class ItemsListActivity extends AppCompatActivity {
         );
 
         AppDatabase.getInstant(ItemsListActivity.this).addItem(item);
-        itemList = AppDatabase.getInstant(ItemsListActivity.this).getItemsList();
+        itemList = AppDatabase.getInstant(ItemsListActivity.this).getItemsList(null);
 
         rvLayoutManager = new LinearLayoutManager(ItemsListActivity.this);
         rv_itemsList.setLayoutManager(rvLayoutManager);

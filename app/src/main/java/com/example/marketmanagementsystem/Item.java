@@ -15,6 +15,9 @@ public class Item {
         this.imageURL = imageURL;
     }
 
+    public Item() {
+    }
+
     @Override
     public String toString() {
         return "Item{" +

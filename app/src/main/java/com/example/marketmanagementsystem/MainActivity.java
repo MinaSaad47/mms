@@ -28,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btn_searchItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SearchItemActivity.class);
+                startActivity(intent);
+            }
+        });
+
         btn_viewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
