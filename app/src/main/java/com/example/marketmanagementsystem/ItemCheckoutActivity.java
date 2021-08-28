@@ -89,7 +89,12 @@ public class ItemCheckoutActivity extends AppCompatActivity {
         btn_checkoutList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                for (Item i : itemCheckoutList) {
+                    Item item = AppDatabase.getInstant(ItemCheckoutActivity.this)
+                            .getItem(i.getId());
+                    item.setQuantity(item.getQuantity() - i.getQuantity()); // database - list
+                    AppDatabase.getInstant(ItemCheckoutActivity.this).updateItem(item);
+                }
             }
         });
 

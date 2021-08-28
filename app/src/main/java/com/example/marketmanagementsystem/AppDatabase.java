@@ -152,23 +152,31 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
     public boolean updateItem(Item item) {
+        long rc;
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues cv = new ContentValues();
-        cv.put(COL_ITEM_ID, item.getId());
-        cv.put(COL_ITEM_NAME, item.getName());
-        cv.put(COL_ITEM_PRICE, item.getPrice());
-        cv.put(COL_ITEM_QUANTITY, item.getQuantity());
-        cv.put(COL_ITEM_IMAGE_URL, item.getImageURL());
 
-        int update = db.update(
-                ITEM_TABLE,
-                cv,
-                "id=?",
-                new String[]{String.valueOf(item.getId())});
+        if (item.getQuantity() == 0) {
+            rc = db.delete(
+                    ITEM_TABLE,
+                    COL_ITEM_ID + "=?",
+                    new String[] {item.getId()});
+        } else {
+            ContentValues cv = new ContentValues();
+            cv.put(COL_ITEM_ID, item.getId());
+            cv.put(COL_ITEM_NAME, item.getName());
+            cv.put(COL_ITEM_PRICE, item.getPrice());
+            cv.put(COL_ITEM_QUANTITY, item.getQuantity());
+            cv.put(COL_ITEM_IMAGE_URL, item.getImageURL());
+            rc = db.update(
+                    ITEM_TABLE,
+                    cv,
+                    COL_ITEM_ID + "=?",
+                    new String[]{item.getId()});
+        }
+
 
         db.close();
-
-        return update == 1;
+        return rc == 1;
     }
 }
