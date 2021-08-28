@@ -1,13 +1,13 @@
 package com.example.marketmanagementsystem;
 
 public class Item {
-    private int id;
+    private String id;
     private String name;
     private double price;
     private int quantity;
     private String imageURL;
 
-    public Item(int id, String name, double price, int quantity, String imageURL) {
+    public Item(String id, String name, double price, int quantity, String imageURL) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -28,11 +28,11 @@ public class Item {
                 '}';
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -66,5 +66,12 @@ public class Item {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public boolean checkout(int quantity) {
+        if (quantity > this.getQuantity())
+            return false;
+        this.quantity -= quantity;
+        return true;
     }
 }

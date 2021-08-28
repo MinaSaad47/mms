@@ -50,8 +50,8 @@ public class AddEditItemActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        int resID = result.getData().getIntExtra("idScan", -1);
-                        tv_itemID.setText(String.valueOf(resID));
+                        String resID = result.getData().getStringExtra("idScan");
+                        tv_itemID.setText(resID);
                     }
                 }
         );
@@ -63,7 +63,7 @@ public class AddEditItemActivity extends AppCompatActivity {
             item = AppDatabase.getInstant(AddEditItemActivity.this).getItemsList(null)
             .get(index);
 
-            tv_itemID.setText(String.valueOf(item.getId()));
+            tv_itemID.setText(item.getId());
             et_itemName.setText(item.getName());
             et_itemPrice.setText(String.valueOf(item.getPrice()));
             et_itemQuantity.setText(String.valueOf(item.getQuantity()));
@@ -77,7 +77,7 @@ public class AddEditItemActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (item == null) {
                     item = new Item();
-                    item.setId(Integer.parseInt(tv_itemID.getText().toString()));
+                    item.setId(tv_itemID.getText().toString());
                 }
                 item.setName(et_itemName.getText().toString().trim());
                 item.setPrice(Double.valueOf(et_itemPrice.getText().toString().trim()));

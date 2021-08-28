@@ -41,7 +41,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String queryString = "CREATE TABLE " + ITEM_TABLE + "(" +
-        COL_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+        COL_ITEM_ID + " TEXT PRIMARY KEY," +
         COL_ITEM_NAME + " TEXT NOT NULL, " +
         COL_ITEM_PRICE + " REAL NOT NULL, " +
         COL_ITEM_QUANTITY + " INT NOT NULL, " +
@@ -72,7 +72,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         return insert == -1;
     }
 
-    public Item getItem(int id) {
+    public Item getItem(String id) {
         Item item;
 
 
@@ -85,7 +85,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         item = new Item(
-                cursor.getInt(0),
+                cursor.getString(0),
                 cursor.getString(1),
                 cursor.getDouble(2),
                 cursor.getInt(3),
@@ -120,7 +120,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Item item = new Item(
-                        cursor.getInt(0), // id
+                        cursor.getString(0), // id
                         cursor.getString(1), // name
                         cursor.getDouble(2), // price
                         cursor.getInt(3), // quantity

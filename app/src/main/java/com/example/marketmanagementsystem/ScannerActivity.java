@@ -34,7 +34,7 @@ public class ScannerActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Intent intent = new Intent();
-                        intent.putExtra("idScan", Integer.parseInt(result.getText()));
+                        intent.putExtra("idScan", result.getText());
                         setResult(RESULT_OK, intent);
                         finish();
                     }
