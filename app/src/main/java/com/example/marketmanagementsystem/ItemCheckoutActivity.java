@@ -5,6 +5,8 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,29 +20,41 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ItemCheckoutActivity extends AppCompatActivity {
 
-    Item item;
-    ActivityResultLauncher<Intent> activityResultLauncher;
-    TextView tv_itemIDCheckout, tv_itemNameCheckout, tv_itemPriceCheckout, tv_itemQuantityCheckout;
-    ImageView iv_itemImageCheckout;
+    private static List<Item> itemCheckoutList;
+
+    RecyclerView rv_itemCheckoutList;
+    RecyclerView.LayoutManager rvLayoutManager;
+    RecyclerView.Adapter rvAdapter;
     TextView tv_totalPrice;
-    EditText et_quantityNumber;
-    Button btn_submitCheckout;
+    Button btn_scanCheckout, btn_checkoutList;
+
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_checkout);
 
-        tv_itemIDCheckout = findViewById(R.id.tv_itemIDCheckout);
-        tv_itemNameCheckout = findViewById(R.id.tv_itemNameCheckout);
-        tv_itemPriceCheckout = findViewById(R.id.tv_itemPriceCheckout);
-        tv_itemQuantityCheckout = findViewById(R.id.tv_itemQuantityCheckout);
-        iv_itemImageCheckout = findViewById(R.id.iv_itemImageCheckout);
+        rv_itemCheckoutList = findViewById(R.id.rv_itemCheckoutList);
+        btn_scanCheckout = findViewById(R.id.btn_scanCheckout);
+        btn_checkoutList = findViewById(R.id.btn_checkoutList);
         tv_totalPrice = findViewById(R.id.tv_totalPrice);
-        et_quantityNumber = findViewById(R.id.et_quantityNumber);
-        btn_submitCheckout = findViewById(R.id.btn_submitCheckout);
+
+        if (itemCheckoutList == null)
+            itemCheckoutList = new ArrayList<>();
+        else
+            tv_totalPrice.setText("Total Price: " + String.valueOf(getTotalPrice()));
+
+        rv_itemCheckoutList.setHasFixedSize(true);
+        rvLayoutManager = new LinearLayoutManager(ItemCheckoutActivity.this);
+        rv_itemCheckoutList.setLayoutManager(rvLayoutManager);
+        rvAdapter = new AppRecyclerViewAdapter(ItemCheckoutActivity.this, itemCheckoutList);
+        rv_itemCheckoutList.setAdapter(rvAdapter);
 
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -48,57 +62,75 @@ public class ItemCheckoutActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         String itemID = result.getData().getStringExtra("idScan");
-                        item = AppDatabase.getInstant(ItemCheckoutActivity.this)
+                        Item item = AppDatabase.getInstant(ItemCheckoutActivity.this)
                                 .getItem(itemID);
-                        tv_itemIDCheckout.setText(item.getId());
-                        tv_itemNameCheckout.setText(item.getName());
-                        tv_itemPriceCheckout.setText(String.valueOf(item.getPrice()));
-                        tv_itemQuantityCheckout.setText(String.valueOf(item.getQuantity()));
-                        Glide.with(ItemCheckoutActivity.this)
-                                .load(item.getImageURL()).into(iv_itemImageCheckout);
+                        if (item == null) {
+                            Toast.makeText(ItemCheckoutActivity.this, "Item Not Available",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        addItemToCheckoutList(item);
+                        restartActivity();
+
                     }
                 }
         );
 
-        Intent intent = new Intent(ItemCheckoutActivity.this, ScannerActivity.class);
-        activityResultLauncher.launch(intent);
-
-        et_quantityNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        btn_scanCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                int quantity = Integer.parseInt(et_quantityNumber.getText().toString());
+            public void onClick(View view) {
+                Intent intent = new Intent(ItemCheckoutActivity.this,
+                        ScannerActivity.class);
 
-                if (quantity > item.getQuantity()) {
-                    et_quantityNumber.setText("");
-                    Toast.makeText(ItemCheckoutActivity.this, "Not Enough Quantity",
-                            Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-
-                Double totalPrice = quantity * item.getPrice();
-                tv_totalPrice.setText(String.valueOf(totalPrice));
-                return true;
+                activityResultLauncher.launch(intent);
             }
         });
 
-        btn_submitCheckout.setOnClickListener(new View.OnClickListener() {
+        btn_checkoutList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (et_quantityNumber.getText() == null)
-                    return;
+            }
+        });
 
-                int quantity = Integer.parseInt(et_quantityNumber.getText().toString());
+    }
 
-                if (!item.checkout(quantity)) {
+    private void addItemToCheckoutList(Item item) {
+        boolean isFound = false;
+        for (Item i: itemCheckoutList) {
+            if (i.getId().equals(item.getId()) ) {
+                if (i.getQuantity() >= item.getQuantity()) {
                     Toast.makeText(ItemCheckoutActivity.this, "Not Enough Quantity",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                AppDatabase.getInstant(ItemCheckoutActivity.this).updateItem(item);
+                i.setQuantity(i.getQuantity() + 1);
+                isFound = true;
+                break;
             }
-        });
+        }
+        if (!isFound) {
+            item.setQuantity(1);
+            itemCheckoutList.add(item);
+        }
+    }
 
+    private void restartActivity() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
+    public static void clearItemCheckoutList() {
+        if (itemCheckoutList != null)
+            itemCheckoutList.clear();
+    }
+
+    private double getTotalPrice() {
+        double totalPrice = 0;
+        for (Item i : itemCheckoutList) {
+            totalPrice += (i.getPrice() * i.getQuantity());
+        }
+        return totalPrice;
     }
 }

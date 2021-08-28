@@ -73,7 +73,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
     public Item getItem(String id) {
-        Item item;
+        Item item = null;
 
 
         String queryString = "SELECT * FROM " + ITEM_TABLE + " WHERE " +
@@ -82,15 +82,15 @@ public final class AppDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, new String[] { String.valueOf(id) });
 
-        cursor.moveToFirst();
-
-        item = new Item(
-                cursor.getString(0),
-                cursor.getString(1),
-                cursor.getDouble(2),
-                cursor.getInt(3),
-                cursor.getString(4)
-        );
+        if (cursor.moveToFirst()) {
+            item = new Item(
+                    cursor.getString(0),
+                    cursor.getString(1),
+                    cursor.getDouble(2),
+                    cursor.getInt(3),
+                    cursor.getString(4)
+            );
+        }
 
         cursor.close();
         db.close();
