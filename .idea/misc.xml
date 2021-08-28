@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/AndroidStudioProjects/MarketManagementSystem2/app/src/main/res/layout/activity_add_edit_item.xml" value="0.42916666666666664" />
+        <entry key="..\:/Android/AndroidStudioProjects/MarketManagementSystem2/app/src/main/res/layout/activity_item_checkout.xml" value="0.42916666666666664" />
         <entry key="..\:/Android/AndroidStudioProjects/MarketManagementSystem2/app/src/main/res/layout/activity_items_list.xml" value="0.42916666666666664" />
         <entry key="..\:/Android/AndroidStudioProjects/MarketManagementSystem2/app/src/main/res/layout/activity_main.xml" value="0.42916666666666664" />
+        <entry key="..\:/Android/AndroidStudioProjects/MarketManagementSystem2/app/src/main/res/layout/activity_scanner.xml" value="0.41510416666666666" />
         <entry key="..\:/Android/AndroidStudioProjects/MarketManagementSystem2/app/src/main/res/layout/activity_search_item.xml" value="0.42916666666666664" />
         <entry key="..\:/Android/AndroidStudioProjects/MarketManagementSystem2/app/src/main/res/layout/one_line_item.xml" value="0.67" />
       </map>

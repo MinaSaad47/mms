@@ -25,16 +25,6 @@ public class ItemsListActivity extends AppCompatActivity {
         rv_itemsList = findViewById(R.id.rv_itemsList);
         rv_itemsList.setHasFixedSize(true);
 
-
-        Item item = new Item(
-                0,
-                "Apple",
-                12,
-                10,
-                "https://zaproduce.com/wholesale/wp-content/uploads/2020/04/red-delicious-1024x1024.jpg"
-        );
-
-        AppDatabase.getInstant(ItemsListActivity.this).addItem(item);
         itemList = AppDatabase.getInstant(ItemsListActivity.this).getItemsList(null);
 
         rvLayoutManager = new LinearLayoutManager(ItemsListActivity.this);

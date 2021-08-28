@@ -12,14 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MarketManagementSystem">
         <activity
+            android:name=".ItemCheckoutActivity"
+            android:exported="true" />
+        <activity
             android:name=".SearchItemActivity"
             android:exported="true" />
         <activity
             android:name=".AddEditItemActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ItemsListActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

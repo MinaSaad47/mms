@@ -59,7 +59,7 @@ public class AddEditItemActivity extends AppCompatActivity {
                     item = new Item();
                 item.setName(et_itemName.getText().toString().trim());
                 item.setPrice(Double.valueOf(et_itemPrice.getText().toString().trim()));
-                item.setQuantity(Integer.valueOf(et_itemPrice.getText().toString().trim()));
+                item.setQuantity(Integer.valueOf(et_itemQuantity.getText().toString().trim()));
                 item.setImageURL(et_itemImageURL.getText().toString().trim());
                 if (id >= 0)
                     AppDatabase.getInstant(AddEditItemActivity.this).updateItem(item);

@@ -49,7 +49,7 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AddEditItemActivity.class);
-                intent.putExtra("id", itemList.get(position).getId());
+                intent.putExtra("id", itemList.get(position).getId() - 1);
                 context.startActivity(intent);
             }
         });

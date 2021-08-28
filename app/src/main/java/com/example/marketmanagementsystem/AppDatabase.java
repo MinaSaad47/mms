@@ -127,18 +127,21 @@ public final class AppDatabase extends SQLiteOpenHelper {
     public boolean updateItem(Item item) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String queryString = "UPDATE " + ITEM_TABLE + " SET " +
-                COL_ITEM_NAME + " = " + item.getName() + ", " +
-                COL_ITEM_PRICE + " = " + item.getPrice() + ", " +
-                COL_ITEM_QUANTITY + " = " + item.getQuantity() + ", " +
-                COL_ITEM_IMAGE_URL + " = " + item.getImageURL();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_ITEM_ID, item.getId());
+        cv.put(COL_ITEM_NAME, item.getName());
+        cv.put(COL_ITEM_PRICE, item.getPrice());
+        cv.put(COL_ITEM_QUANTITY, item.getQuantity());
+        cv.put(COL_ITEM_IMAGE_URL, item.getImageURL());
 
-        Cursor cursor = db.rawQuery(queryString, null);
+        int update = db.update(
+                ITEM_TABLE,
+                cv,
+                "id=?",
+                new String[]{String.valueOf(item.getId())});
 
-        boolean rc = cursor.moveToFirst();
-        cursor.close();
         db.close();
 
-        return rc;
+        return update == 1;
     }
 }
