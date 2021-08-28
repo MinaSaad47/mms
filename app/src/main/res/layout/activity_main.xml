@@ -22,18 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search Item"
-        app:layout_constraintEnd_toStartOf="@+id/btn_editItem"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_addItem"
         app:layout_constraintTop_toTopOf="@+id/btn_addItem" />
-
-    <Button
-        android:id="@+id/btn_editItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit Item"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_searchItem"
-        app:layout_constraintTop_toTopOf="@+id/btn_searchItem" />
 
     <ImageView
         android:id="@+id/imageView"

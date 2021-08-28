@@ -72,6 +72,32 @@ public final class AppDatabase extends SQLiteOpenHelper {
         return insert == -1;
     }
 
+    public Item getItem(int id) {
+        Item item;
+
+
+        String queryString = "SELECT * FROM " + ITEM_TABLE + " WHERE " +
+                COL_ITEM_ID + " =?";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, new String[] { String.valueOf(id) });
+
+        cursor.moveToFirst();
+
+        item = new Item(
+                cursor.getInt(0),
+                cursor.getString(1),
+                cursor.getDouble(2),
+                cursor.getInt(3),
+                cursor.getString(4)
+        );
+
+        cursor.close();
+        db.close();
+
+        return item;
+    }
+
     public List<Item> getItemsList(String itemName) {
         List<Item> returnList = new ArrayList<>();
 

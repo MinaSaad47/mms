@@ -57,6 +57,9 @@ public class AddEditItemActivity extends AppCompatActivity {
         );
 
         if (index >= 0) {
+
+            btn_scan.setVisibility(View.GONE);
+
             item = AppDatabase.getInstant(AddEditItemActivity.this).getItemsList(null)
             .get(index);
 
