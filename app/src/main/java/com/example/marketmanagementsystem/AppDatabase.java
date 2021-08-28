@@ -59,6 +59,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
+        cv.put(COL_ITEM_ID, item.getId());
         cv.put(COL_ITEM_NAME, item.getName());
         cv.put(COL_ITEM_PRICE, item.getPrice());
         cv.put(COL_ITEM_QUANTITY, item.getQuantity());

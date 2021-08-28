@@ -1,5 +1,9 @@
 package com.example.marketmanagementsystem;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,13 +20,14 @@ import java.util.List;
 
 public class AddEditItemActivity extends AppCompatActivity {
 
-    int id;
+    int index;
     Item item;
 
     TextView tv_itemID;
     EditText et_itemName, et_itemPrice, et_itemQuantity, et_itemImageURL;
     ImageView iv_itemImagePreview;
-    Button btn_submit;
+    Button btn_submit, btn_scan;
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +41,24 @@ public class AddEditItemActivity extends AppCompatActivity {
         et_itemImageURL = findViewById(R.id.et_imageURL);
         iv_itemImagePreview = findViewById(R.id.iv_itemImagePreview);
         btn_submit = findViewById(R.id.btn_submit);
+        btn_scan = findViewById(R.id.btn_scan);
 
-        id = getIntent().getIntExtra("id", -1);
+        index = getIntent().getIntExtra("index", -1);
 
-        if (id >= 0) {
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        int resID = result.getData().getIntExtra("idScan", -1);
+                        tv_itemID.setText(String.valueOf(resID));
+                    }
+                }
+        );
+
+        if (index >= 0) {
             item = AppDatabase.getInstant(AddEditItemActivity.this).getItemsList(null)
-            .get(id);
+            .get(index);
 
             tv_itemID.setText(String.valueOf(item.getId()));
             et_itemName.setText(item.getName());
@@ -55,13 +72,15 @@ public class AddEditItemActivity extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (item == null)
+                if (item == null) {
                     item = new Item();
+                    item.setId(Integer.parseInt(tv_itemID.getText().toString()));
+                }
                 item.setName(et_itemName.getText().toString().trim());
                 item.setPrice(Double.valueOf(et_itemPrice.getText().toString().trim()));
                 item.setQuantity(Integer.valueOf(et_itemQuantity.getText().toString().trim()));
                 item.setImageURL(et_itemImageURL.getText().toString().trim());
-                if (id >= 0)
+                if (index >= 0)
                     AppDatabase.getInstant(AddEditItemActivity.this).updateItem(item);
                 else
                     AppDatabase.getInstant(AddEditItemActivity.this).addItem(item);
@@ -69,6 +88,14 @@ public class AddEditItemActivity extends AppCompatActivity {
                 // return to main activity
                 Intent intent = new Intent(AddEditItemActivity.this, MainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btn_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddEditItemActivity.this, ScannerActivity.class);
+                activityResultLauncher.launch(intent);
             }
         });
     }
