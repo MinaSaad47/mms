@@ -95,6 +95,9 @@ public class ItemCheckoutActivity extends AppCompatActivity {
                     item.setQuantity(item.getQuantity() - i.getQuantity()); // database - list
                     AppDatabase.getInstant(ItemCheckoutActivity.this).updateItem(item);
                 }
+                Intent intent = new Intent(ItemCheckoutActivity.this,
+                        MainActivity.class);
+                startActivity(intent);
             }
         });
 
