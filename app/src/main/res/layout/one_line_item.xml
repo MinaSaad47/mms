@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="TextView"
+        android:textColor="@color/green"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
 
@@ -42,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="TextView"
+        android:textColor="@color/green"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
@@ -51,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="TextView"
+        android:textColor="@color/green"
         app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintTop_toTopOf="@+id/textView7" />
 
@@ -60,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="TextView"
+        android:textColor="@color/green"
         app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toTopOf="@+id/textView6" />
 
@@ -69,6 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="ID:"
+        android:textColor="@color/green"
         app:layout_constraintStart_toEndOf="@+id/iv_itemImage"
         app:layout_constraintTop_toTopOf="@+id/iv_itemImage" />
 
@@ -78,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Name:"
+        android:textColor="@color/green"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -87,6 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Price:"
+        android:textColor="@color/green"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -96,6 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Quantity:"
+        android:textColor="@color/green"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
