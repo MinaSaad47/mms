@@ -14,4 +14,4 @@ Market Management System (Simple University Project)
 * [glide](https://github.com/bumptech/glide) by bumptech.
 
 ## TODO
--[] Statistics on Main Activity
+-[ ] Statistics on Main Activity
