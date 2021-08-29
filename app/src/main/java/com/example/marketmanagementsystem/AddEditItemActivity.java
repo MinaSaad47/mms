@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.zxing.oned.rss.AbstractRSSReader;
 
 import java.util.List;
 
@@ -75,6 +77,17 @@ public class AddEditItemActivity extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (tv_itemID.getText().toString().isEmpty() ||
+                    et_itemName.getText().toString().isEmpty() ||
+                    et_itemPrice.getText().toString().isEmpty() ||
+                    et_itemQuantity.getText().toString().isEmpty() ||
+                    et_itemImageURL.getText().toString().isEmpty()) {
+
+                    Toast.makeText(AddEditItemActivity.this, "Not enough data provided",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (item == null) {
                     item = new Item();
                     item.setId(tv_itemID.getText().toString());
