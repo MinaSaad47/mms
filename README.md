@@ -12,3 +12,6 @@ Market Management System (Simple University Project)
 ## Third party deps
 * [code-scanner](https://github.com/yuriy-budiyev/code-scanner) by yuriy-budiyev.
 * [glide](https://github.com/bumptech/glide) by bumptech.
+
+## TODO
+-[] Statistics on Main Activity
