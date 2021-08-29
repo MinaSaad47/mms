@@ -20,7 +20,7 @@ import java.util.List;
 
 public class AddEditItemActivity extends AppCompatActivity {
 
-    int index;
+    String id = null;
     Item item;
 
     TextView tv_itemID;
@@ -43,7 +43,7 @@ public class AddEditItemActivity extends AppCompatActivity {
         btn_submit = findViewById(R.id.btn_submit);
         btn_scan = findViewById(R.id.btn_scan);
 
-        index = getIntent().getIntExtra("index", -1);
+        id = getIntent().getStringExtra("id");
 
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -56,12 +56,12 @@ public class AddEditItemActivity extends AppCompatActivity {
                 }
         );
 
-        if (index >= 0) {
+        if (id != null) {
 
             btn_scan.setVisibility(View.GONE);
 
-            item = AppDatabase.getInstant(AddEditItemActivity.this).getItemsList(null)
-            .get(index);
+            item = AppDatabase.getInstant(AddEditItemActivity.this).getItem(id);
+
 
             tv_itemID.setText(item.getId());
             et_itemName.setText(item.getName());
@@ -83,7 +83,7 @@ public class AddEditItemActivity extends AppCompatActivity {
                 item.setPrice(Double.valueOf(et_itemPrice.getText().toString().trim()));
                 item.setQuantity(Integer.valueOf(et_itemQuantity.getText().toString().trim()));
                 item.setImageURL(et_itemImageURL.getText().toString().trim());
-                if (index >= 0)
+                if (id != null)
                     AppDatabase.getInstant(AddEditItemActivity.this).updateItem(item);
                 else
                     AppDatabase.getInstant(AddEditItemActivity.this).addItem(item);
